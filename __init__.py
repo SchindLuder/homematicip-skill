@@ -1,6 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 class Homematicip(MycroftSkill):
 	def __init__(self):
+		self.log.info('__init__')
 		MycroftSkill.__init__(self)
 	
 	def initialize(self):
