@@ -1,4 +1,6 @@
+import subprocess
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
+
 class Homematicip(MycroftSkill):
 	def __init__(self):
 		MycroftSkill.__init__(self)
@@ -15,10 +17,16 @@ class Homematicip(MycroftSkill):
 		
 		if room_type is None:
 			self.speak('This room type is unknown to me')
-		else:
-			self.speak('I got the room. Here we go!')
-			self.speak(str(room_type));
-			
+			return
+		
+		self.speak('I got the room. Here we go!')
+		self.speak(str(room_type));
+		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
+
+		
+		result = subprocess.run([self.settings.get('HmipClientPath'), '-l'], stdout=subprocess.PIPE)
+>>> result.stdout
+		
 def create_skill():
 	return Homematicip()
 
