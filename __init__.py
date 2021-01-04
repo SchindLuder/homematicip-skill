@@ -14,6 +14,6 @@ class Homematicip(MycroftSkill):
 		elif
 			self.speak('I got the room. Here we go!')
 			
-def create_skill():
-	return Homematicip()
+	def create_skill():
+		return Homematicip()
 
