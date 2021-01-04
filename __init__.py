@@ -3,12 +3,17 @@ class Homematicip(MycroftSkill):
 	def __init__(self):
 		MycroftSkill.__init__(self)
 		
+	def initialize(self):
+		self.clientPath = self.settings.get('homematic_client_script')
+		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):
 		self.log.info('get temperature intent detected')
 		self.speak('Wait i will try to read the temperature')
 		room_type = message.data.get('room')
 
+		self.speak(self.clientPath)
+		
 		if room_type is None:
 			self.speak('This room type is unknown to me')
 		else:
