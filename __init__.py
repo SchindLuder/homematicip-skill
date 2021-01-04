@@ -6,7 +6,7 @@ class Homematicip(MycroftSkill):
 	
 	def initialize(self):
 		self.log.info('initialized')
-		self.register_intent_file("homematicip.get.temperature.intent",self.handle_get_temperature)
+		#self.register_intent_file("homematicip.get.temperature.intent",self.handle_get_temperature)
 		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):
