@@ -8,7 +8,7 @@
                         "name": "HmipClientPath",
                         "type": "text",
                         "label": "Specify the local path of hmip_cli.p using an at-sign",
-                        "value": @"./mycroft-core/.venv/bin/hmip_cli.p"
+                        "value": @"./home/pi/mycroft-core/.venv/bin/hmip_cli.p"
                     }
                 ]
             }
