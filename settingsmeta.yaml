@@ -1,10 +1,12 @@
 skillMetadata:
   sections:
     - name: paths
-        - name: homematic_client_script
+      fields:
+        - name: homematic_client_script          
           type: text
           label: homematic_client_script
-          placeholder: ./mycroft-core/.venv/bin/hmip_cli.py
+          value: ./mycroft-core/.venv/bin/hmip_cli.py
+          placeholder: path to client script
 
 #skillMetadata:
 #  sections:
