@@ -1,7 +1,6 @@
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 class Homematicip(MycroftSkill):
 	def __init__(self):
-		self.log.info('__init__')
 		MycroftSkill.__init__(self)
 		
 	@intent_handler('homematicip.get.temperature.intent')
