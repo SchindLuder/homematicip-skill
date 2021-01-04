@@ -13,6 +13,7 @@ class Homematicip(MycroftSkill):
 			self.speak('This room type is unknown to me')
 		else:
 			self.speak('I got the room. Here we go!')
+			self.speak(str(room_type));
 			
 def create_skill():
 	return Homematicip()
