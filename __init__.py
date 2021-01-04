@@ -4,7 +4,7 @@ class Homematicip(MycroftSkill):
 		MycroftSkill.__init__(self)
 		
 	def initialize(self):
-		self.clientPath = self.settings.get('homematic_client_script')
+		self.clientPath = self.settings.get('HmipClientPath')
 		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):
