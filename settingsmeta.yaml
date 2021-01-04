@@ -5,8 +5,7 @@ skillMetadata:
         - name: homematic_client_script          
           type: text
           label: homematic_client_script
-          value: ./mycroft-core/.venv/bin/hmip_cli.py
-          placeholder: path to client script
+          value: './mycroft-core/.venv/bin/hmip_cli.py'
 
 #skillMetadata:
 #  sections:
