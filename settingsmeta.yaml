@@ -5,7 +5,7 @@ skillMetadata:
           - name: homematic_client_script
             type: text
             label: Enter local path to hmip_cli.py
-            value:"test"#"./mycroft-core/.venv/bin/hmip_cli.p"
+            value:"test"
 #skillMetadata:
 #  sections:
 #    - name: Options << Name of section
