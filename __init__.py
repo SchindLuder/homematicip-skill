@@ -6,8 +6,10 @@ class Homematicip(MycroftSkill):
 	
 	def initialize(self):
 		self.log.info('initialized')
+		self.register_intent_file("homematicip.get.temperature.intent",
+                                      self.handle_get_temperature)
 		
-	@intent_file_handler('homematicip.get.temperature.intent')
+	#@intent_file_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):
 		self.log.info('get temperature intent detected')
 		self.speak('Wait i will try to read the temperature')
