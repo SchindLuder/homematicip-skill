@@ -12,7 +12,7 @@ class Homematicip(MycroftSkill):
 		self.speak('Wait i will try to read the temperature')
 		room_type = message.data.get('room')
 
-		self.speak(self.clientPath)
+		self.log.info(self.clientPath)
 		
 		if room_type is None:
 			self.speak('This room type is unknown to me')
