@@ -11,7 +11,7 @@ class Homematicip(MycroftSkill):
 
 		if room_type is None:
 			self.speak('This room type is unknown to me')
-		elif
+		else
 			self.speak('I got the room. Here we go!')
 			
 	def create_skill():
