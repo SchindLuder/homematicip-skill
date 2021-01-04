@@ -2,14 +2,50 @@
     "skillMetadata": {
         "sections": [
             {
-                "name": "Paths",
+                "name": "Configuration",
                 "fields": [
                     {
                         "name": "HmipClientPath",
                         "type": "text",
                         "label": "Specify the local path of hmip_cli.p using an at-sign",
                         "value": @"./home/pi/mycroft-core/.venv/bin/hmip_cli.p"
-                    }
+                    },
+                    {
+                        "name": "WorkingRoom",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"7588b919-7e37-4f1f-99d9-5008d081e454"
+                    },
+                    {
+                        "name": "BathRoom",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"c9b4d50b-51f0-41b3-80a0-600d78e57eb7"
+                    },
+                    {
+                        "name": "DiningRoom",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"d1cc4bc5-362a-4fbf-a1ab-cdc9c8a2eec0"
+                    },
+                    {
+                        "name": "Kitchen",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"6d2b96df-3835-4d32-9add-5039124e58b3"
+                    },
+                    {
+                        "name": "SleepingRoom",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"44749dcc-c4d9-4601-b7c8-ff8fa9167a90"
+                    },
+                    {
+                        "name": "LivingRoom",
+                        "type": "text",
+                        "label": "Specify the HomeMatic-Id for your rooms",
+                        "value": @"1e91bcd0-396d-4562-a8ad-e991a27ddcd7"
+                    }                    
                 ]
             }
         ]
