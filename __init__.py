@@ -18,17 +18,12 @@ class Homematicip(MycroftSkill):
 		if room_type is None:
 			self.speak('This room type is unknown to me')
 			return
-		
-		self.speak('I got the room. Here we go!')
-		self.speak(str(room_type));
-		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 
+		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
 		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
 		
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin")
-		
-		time.sleep(3)
 		
 		resultString = ""
 		for line in result.stdout.readlines()
