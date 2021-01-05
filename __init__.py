@@ -26,7 +26,7 @@ class Homematicip(MycroftSkill):
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory)
 		resultString = str(result.stdout).lower()	
 		split = resultString.split("\\n")
-		
+						
 		room_dict = {
 			"bath room" : "bad",
 			"working room" : "arbeitszimmer",
@@ -38,13 +38,16 @@ class Homematicip(MycroftSkill):
 			"bedroom" :"schlafzimmer"
 		}
 		
+		if room_type not in room_dict:
+			self.speak_dialog('unknown.room', { 'room' : room_type });
+		
 		desired_room = str(room_dict[room_type])
 		
 		for room in split:
 			roomString = str(room)
 						
-			self.log.info('analyzing')
-			self.log.info(roomString[1:30])
+			#self.log.info('analyzing')
+			#self.log.info(roomString[1:30])
 			
 			match = re.search(r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)', roomString)
 			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
