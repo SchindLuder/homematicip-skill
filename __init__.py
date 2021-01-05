@@ -34,12 +34,12 @@ class Homematicip(MycroftSkill):
 		for room in split:
 			self.log.info(room + 'analyzed')
 						
-			mymatch = re.match("actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", room)
+			m = re.match(r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)', room)
 			
-			if mymatch is None:
+			if m is None:
 				continue
 			
-			self.log.info(mymatch.group('temp'))
+			self.log.info(m.group('temp'))
 		
 def create_skill():
 	return Homematicip()
