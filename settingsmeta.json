@@ -45,7 +45,7 @@
                         "type": "text",
                         "label": "Specify the HomeMatic-Id for your rooms",
                         "value": "1e91bcd0-396d-4562-a8ad-e991a27ddcd7"
-                    }                    
+                    }
                 ]
             }
         ]
