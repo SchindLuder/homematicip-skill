@@ -35,12 +35,9 @@ class Homematicip(MycroftSkill):
 		split = resultString.split("hmip")
 		
 		for room in split:
-			self.log.info('analyzing' + room)
-			
-			if "arbeitszimmer" in room:
-				mymatch = re.match("valveactualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", str(room))
-				self.log.info(mymatch)
-				continue
+			self.log.info('analyzing' + room)						
+			mymatch = re.match("actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", room)
+			self.log.info(mymatch)			
 		
 def create_skill():
 	return Homematicip()
