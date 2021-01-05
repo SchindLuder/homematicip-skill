@@ -8,7 +8,7 @@
                         "name": "HmipClientPath",
                         "type": "text",
                         "label": "Specify the local path of hmip_cli.py",
-                        "value": "/home/pi/mycroft-core/.venv/bin/hmip_cli.py"
+                        "value": @"/home/pi/mycroft-core/.venv/bin/hmip_cli.py"
                     },
                     {
                         "name": "WorkingRoom",
