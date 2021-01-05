@@ -29,18 +29,20 @@ class Homematicip(MycroftSkill):
 		
 		self.log.info(resultString)
 				
-		split = resultString.split("hmip")
+		split = resultString.split("\\n")
 		
 		for room in split:
-			self.log.info(room[1:10])
-			self.log.info(room + 'analyzed')
-						
+			self.log.info('analyzing')
+			self.log.info(room[-15:0])
+			
 			match = re.match(r'actualtemperature', str(room))
 			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
 			if match is None:
+				self.log.info('could not match')
 				self.log.info(room)
 				continue
 				
+			self.log.info('here is the match')
 			self.log.info(str(match))
 
 def create_skill():
