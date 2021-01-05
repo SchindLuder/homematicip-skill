@@ -25,11 +25,10 @@ class Homematicip(MycroftSkill):
 		
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin")
 		
-		resultString = ""
-		for line in result.stdout.readlines()
-			self.log.info(line)
-			resultString = resultString + line.lower()				
+		resultString = str(result.stdout).lower()
 		
+		self.log.info(resultString)
+				
 		split = resultString.split("hmip")
 		
 		for room in split:
