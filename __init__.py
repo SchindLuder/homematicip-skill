@@ -35,6 +35,7 @@ class Homematicip(MycroftSkill):
 			"dining room": "balkonzimmer",
 			"sleeping room" :"schlafzimmer",
 			"bed room" :"schlafzimmer"
+			"bedroom" :"schlafzimmer"
 		}
 		
 		desired_room = str(room_dict[room_type])
