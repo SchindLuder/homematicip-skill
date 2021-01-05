@@ -32,6 +32,7 @@ class Homematicip(MycroftSkill):
 		split = resultString.split("hmip")
 		
 		for room in split:
+			self.log.info(room[0:15])
 			self.log.info(room + 'analyzed')
 						
 			m = re.match(r'actualtemperature\(.{1,4}\), room)
