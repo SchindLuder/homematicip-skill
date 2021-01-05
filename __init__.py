@@ -27,16 +27,15 @@ class Homematicip(MycroftSkill):
 		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
 		
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin")
-		time.sleep(3)
 		
 		resultString = str(result).lower()
 		
-		self.log.debug('result' + resultString)
+		self.log.info('result' + resultString)
 		
 		split = resultString.split("hmip")
 		
 		for room in split:
-			self.log.debug('analyzing' + room)
+			self.log.info('analyzing' + room)
 			
 			if "arbeitszimmer" in room:
 				mymatch = re.match("valveactualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", str(room))
