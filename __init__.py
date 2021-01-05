@@ -32,14 +32,15 @@ class Homematicip(MycroftSkill):
 		split = resultString.split("\\n")
 		
 		for room in split:
+			roomString = str(room)
 			self.log.info('analyzing')
-			self.log.info(room[-15:0])
+			self.log.info(roomString)
 			
-			match = re.match(r'actualtemperature', str(room))
+			match = re.match(r'actualtemperature', roomString)
 			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
 			if match is None:
 				self.log.info('could not match')
-				self.log.info(room)
+				self.log.info(roomString)
 				continue
 				
 			self.log.info('here is the match')
