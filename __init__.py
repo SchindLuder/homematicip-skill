@@ -1,3 +1,5 @@
+import os
+import re
 import subprocess
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 
@@ -20,10 +22,18 @@ class Homematicip(MycroftSkill):
 		self.speak(str(room_type));
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 
-		self.log.info('trying to run client command from: ' + self.clientPath)
+		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
+		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
 		
-		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd="/home/pi/mycroft-core/.venv/bin")
-		self.log.info(result)
+		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd="workingDirectory") #"/home/pi/mycroft-core/.venv/bin").lower()
+		
+		split = result.split("hmip")		
+		for room in split:
+			if "arbeitszimmer" in room:
+				mymatch = re.match("valveactualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", str(room))
+				self.log.info(mymatch)
+				continue
+		
 		
 def create_skill():
 	return Homematicip()
