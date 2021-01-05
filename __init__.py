@@ -38,10 +38,12 @@ class Homematicip(MycroftSkill):
 			match = re.match(r'actualtemperature\(.{1,4}\)', room)
 			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
 			if match is None:
+				self.speak('could not match the temperature for string')
+				self.log.info(room)
 				continue
-			
+				
 			self.log.info(str(m))
-		
+
 def create_skill():
 	return Homematicip()
 
