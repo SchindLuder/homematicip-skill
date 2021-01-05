@@ -31,7 +31,7 @@ class Homematicip(MycroftSkill):
 			"bath room" : "bad",
 			"working room" : "arbeitszimmer",
 			"living room" :"couchzimmer", 
-			"kitchen": "küche",
+			"kitchen": "che Heizung",
 			"dining room": "balkonzimmer",
 			"sleeping room" :"schlafzimmer",
 			"bed room" :"schlafzimmer",
