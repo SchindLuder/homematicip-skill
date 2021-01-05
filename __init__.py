@@ -52,7 +52,7 @@ class Homematicip(MycroftSkill):
 				#self.log.info(roomString)
 				continue
 				
-			if  desired_room in roomString
+			if  desired_room in roomString:
 				temperature = match.group('temp')
 				self.speak('The temperature in the ' + room_type + ' is ' + temperature)
 
