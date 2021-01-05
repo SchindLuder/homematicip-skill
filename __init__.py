@@ -23,30 +23,38 @@ class Homematicip(MycroftSkill):
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
 		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
 		
-		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin")
-		
-		resultString = str(result.stdout).lower()
-		
-		self.log.info(resultString)
-				
+		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory)
+		resultString = str(result.stdout).lower()	
 		split = resultString.split("\\n")
+		
+		room_dict = {
+			"bath room" : "bad",
+			"working room" : "arbeitszimmer",
+			"living room" :"couchzimmer", 
+			"kitchen": "küche",
+			"dining room": "balkonzimmer",
+			"sleeping room" :"schlafzimmer",
+			"bed room" :"schlafzimmer"
+		}
+		
+		desired_room = room_dict[room_type]
 		
 		for room in split:
 			roomString = str(room)
+						
 			self.log.info('analyzing')
-			self.log.info(roomString)
+			self.log.info(roomString[1:30])
 			
 			match = re.search(r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)', roomString)
 			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
 			if match is None:
-				self.log.info('could not match')
-				self.log.info(roomString)
+				#self.log.info('could not match')
+				#self.log.info(roomString)
 				continue
 				
-			self.log.info('here is the match')
-			self.log.info(str(match))
-			
-			self.speak(match.group('temp'))
+			if desired_room in roomString					
+				temperature = match.group('temp')					
+				self.speak('The temperature in the ' + room_type + ' is ' + temperature)
 
 def create_skill():
 	return Homematicip()
