@@ -12,9 +12,6 @@ class Homematicip(MycroftSkill):
 	def handle_get_temperature(self, message):
 		self.speak('Wait i will try to read the temperature')
 		room_type = message.data.get('room')
-
-		self.log.info(self.settings.get('HmipClientPath'))
-		
 		if room_type is None:
 			self.speak('This room type is unknown to me')
 			return
@@ -23,8 +20,9 @@ class Homematicip(MycroftSkill):
 		self.speak(str(room_type));
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 
+		self.log.info('trying to run client command from: ' + self.clientPath)
 		
-		result = subprocess.run([self.settings.get('HmipClientPath'), '--list-devices'], stdout=subprocess.PIPE)
+		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE)
 		self.log.info(result)
 		
 def create_skill():
