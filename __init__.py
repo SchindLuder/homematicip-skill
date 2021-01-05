@@ -31,9 +31,9 @@ class Homematicip(MycroftSkill):
 		time.sleep(3)
 		
 		resultString = ""
-		for line in result.stdout:
+		for line in result.stdout.readlines()
 			self.log.info(line)
-			resultString += line.lower()				
+			resultString = resultString + line.lower()				
 		
 		split = resultString.split("hmip")
 		
