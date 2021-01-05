@@ -22,7 +22,7 @@ class Homematicip(MycroftSkill):
 
 		self.log.info('trying to run client command from: ' + self.clientPath)
 		
-		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE)
+		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd="/home/pi/mycroft-core/.venv/bin")
 		self.log.info(result)
 		
 def create_skill():
