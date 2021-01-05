@@ -25,7 +25,7 @@ class Homematicip(MycroftSkill):
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
 		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
 		
-		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd="workingDirectory") #"/home/pi/mycroft-core/.venv/bin").lower()
+		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin").lower()
 		
 		split = result.split("hmip")		
 		for room in split:
