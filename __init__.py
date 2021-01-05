@@ -36,7 +36,7 @@ class Homematicip(MycroftSkill):
 						
 			mymatch = re.match("actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", room)
 			
-			if myMatch is None:
+			if mymatch is None:
 				continue
 			
 			self.log.info(mymatch.group('temp'))
