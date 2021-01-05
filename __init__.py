@@ -17,6 +17,8 @@ class Homematicip(MycroftSkill):
 		if room_type is None:			
 			return
 		
+		room_type = room_type.replace(" ","")
+		
 		self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
 
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
@@ -28,17 +30,16 @@ class Homematicip(MycroftSkill):
 		split = resultString.split("\\n")
 						
 		room_dict = {
-			"bath room" : "bad",
-			"rest room" : "bad",
-			"working room" : "arbeitszimmer",
-			"couch room" :"couchzimmer", 
-			"living room" :"couchzimmer", 			
-			"cooking room": "che heizung",
+			"bathroom" : "bad",
+			"restroom" : "bad",
+			"workingroom" : "arbeitszimmer",
+			"couchroom" :"couchzimmer", 
+			"livingroom" :"couchzimmer", 			
+			"cookingroom": "che heizung",
 			"kitchen": "che heizung",			
-			"kitchen room": "che heizung",
-			"dining room": "balkonzimmer",
-			"sleeping room" :"schlafzimmer",
-			"bed room" :"schlafzimmer",
+			"kitchenroom": "che heizung",
+			"diningroom": "balkonzimmer",
+			"sleepingroom" :"schlafzimmer",
 			"bedroom" :"schlafzimmer"
 		}
 		
