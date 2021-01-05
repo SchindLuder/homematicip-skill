@@ -24,8 +24,8 @@ class Homematicip(MycroftSkill):
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 
 		
-		result = subprocess.run([self.settings.get('HmipClientPath'), '-l'], stdout=subprocess.PIPE)
->>> result.stdout
+		result = subprocess.run([self.settings.get('HmipClientPath'), '--list-devices'], stdout=subprocess.PIPE)
+		self.log.info(result)
 		
 def create_skill():
 	return Homematicip()
