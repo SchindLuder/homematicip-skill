@@ -29,9 +29,13 @@ class Homematicip(MycroftSkill):
 						
 		room_dict = {
 			"bath room" : "bad",
+			"rest room" : "bad",
 			"working room" : "arbeitszimmer",
-			"living room" :"couchzimmer", 
-			"kitchen": "che heizung",
+			"couch room" :"couchzimmer", 
+			"living room" :"couchzimmer", 			
+			"cooking room": "che heizung",
+			"kitchen": "che heizung",			
+			"kitchen room": "che heizung",
 			"dining room": "balkonzimmer",
 			"sleeping room" :"schlafzimmer",
 			"bed room" :"schlafzimmer",
