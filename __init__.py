@@ -28,15 +28,23 @@ class Homematicip(MycroftSkill):
 		
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory) #"/home/pi/mycroft-core/.venv/bin")
 		
-		resultString = str(result).lower()
+		time.sleep(3)
 		
-		self.log.info('result' + resultString)
+		resultString = ""
+		for line in result.stdout:
+			self.log.info(line)
+			resultString += line.lower()				
 		
 		split = resultString.split("hmip")
 		
 		for room in split:
 			self.log.info(room + 'analyzed')
+						
 			mymatch = re.match("actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)", room)
+			
+			if myMatch is None:
+				continue
+			
 			self.log.info(mymatch.group('temp'))
 		
 def create_skill():
