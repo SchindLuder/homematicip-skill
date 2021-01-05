@@ -30,8 +30,8 @@ class Homematicip(MycroftSkill):
 		split = resultString.split("\\n")
 						
 		room_dict = {
-			"bathroom" : "bad",
-			"restroom" : "bad",
+			"bathroom" : "wandthermostat bad",
+			"restroom" : "wandthermostat bad",
 			"workingroom" : "arbeitszimmer",
 			"couchroom" :"couchzimmer", 
 			"livingroom" :"couchzimmer", 			
