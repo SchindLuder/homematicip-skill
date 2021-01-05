@@ -17,7 +17,7 @@ class Homematicip(MycroftSkill):
 		if room_type is None:			
 			return
 		
-		self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type}		
+		self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
 
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
