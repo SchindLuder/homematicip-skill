@@ -55,8 +55,7 @@ class Homematicip(MycroftSkill):
 				
 			if  desired_room in roomString:
 				temperature = match.group('temp')
-				self.speak('The temperature in the ' + room_type + ' is ' + temperature)
-
+				self.speak_dialog('say.temperature', {'room': roomType, 'temperature': temperature})
 def create_skill():
 	return Homematicip()
 
