@@ -12,12 +12,12 @@ class Homematicip(MycroftSkill):
 		self.clientPath = self.settings.get('HmipClientPath')
 		
 	@intent_handler('homematicip.get.temperature.intent')
-	def handle_get_temperature(self, message):
-		self.speak('Wait i will try to read the temperature')
+	def handle_get_temperature(self, message):		
 		room_type = message.data.get('room')
-		if room_type is None:
-			self.speak('This room type is unknown to me')
+		if room_type is None:			
 			return
+		
+		self.speak('Wait i will try to read the temperature for ' + room_type)
 
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
@@ -37,7 +37,7 @@ class Homematicip(MycroftSkill):
 			"bed room" :"schlafzimmer"
 		}
 		
-		desired_room = room_dict[room_type]
+		desired_room = str(room_dict[room_type])
 		
 		for room in split:
 			roomString = str(room)
