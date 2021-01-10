@@ -2,6 +2,10 @@ import os
 import re
 import time
 import subprocess
+import time
+from pixels import Pixels, pixels
+from alexa_led_pattern import AlexaLedPattern
+from google_home_led_pattern import GoogleHomeLedPattern
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 
 class Homematicip(MycroftSkill):
@@ -10,16 +14,26 @@ class Homematicip(MycroftSkill):
 		
 	def initialize(self):
 		self.clientPath = self.settings.get('HmipClientPath')
+		pixels.pattern = GoogleHomeLedPattern(show=pixels.show)
 		
+	def leds_thinking()	
+		try:
+			pixels.think()            
+			pixels.speak()
+      pixels.off()
+		except KeyboardInterrupt:
+			return
+					
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
+		pixels.think()
 		room_type = message.data.get('room')
 		if room_type is None:			
 			return
 		
 		room_type = room_type.replace(" ","")
 		
-		self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
+		#self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
 
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
@@ -64,7 +78,10 @@ class Homematicip(MycroftSkill):
 				
 			if  desired_room in roomString:
 				temperature = match.group('temp')
+				pixels.speak()
 				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
+				pixels.off()
+				
 def create_skill():
 	return Homematicip()
 
