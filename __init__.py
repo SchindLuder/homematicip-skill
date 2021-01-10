@@ -20,7 +20,7 @@ class Homematicip(MycroftSkill):
 		try:
 			pixels.think()            
 			pixels.speak()
-      pixels.off()
+      			pixels.off()
 		except KeyboardInterrupt:
 			return
 					
