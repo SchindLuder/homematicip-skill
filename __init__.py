@@ -12,8 +12,9 @@ class Homematicip(MycroftSkill):
 		
 	def initialize(self):
 		self.clientPath = self.settings.get('HmipClientPath')
-		pattern = AlexaLedPattern()
-		self.pixels = Pixels(pattern)
+		self.pixels = Pixels()		
+		self.pixels.pattern =  = AlexaLedPattern(show = self.pixels.show)
+		
 					
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
