@@ -27,7 +27,7 @@ class Homematicip(MycroftSkill):
 					
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
-		self.pixels.speak()
+		self.pixels.listen()
 		room_type = message.data.get('room')
 		if room_type is None:			
 			return
@@ -79,7 +79,9 @@ class Homematicip(MycroftSkill):
 				
 			if  desired_room in roomString:
 				temperature = match.group('temp')
-				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
+				self.pixels.speak()
+				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})				
+				time.sleep(3)
 				self.pixels.off()
 				time.sleep(1)
 
