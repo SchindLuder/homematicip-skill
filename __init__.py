@@ -16,7 +16,7 @@ class Homematicip(MycroftSkill):
 		self.clientPath = self.settings.get('HmipClientPath')
 		pixels.pattern = GoogleHomeLedPattern(show=pixels.show)
 		
-	def leds_thinking()	
+	def leds_thinking():
 		try:
 			pixels.think()            
 			pixels.speak()
