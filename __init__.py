@@ -3,7 +3,7 @@ import re
 import time
 import subprocess
 import time
-from pixels import Pixels, pixels
+from pixels import pixels
 from alexa_led_pattern import AlexaLedPattern
 from google_home_led_pattern import GoogleHomeLedPattern
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
