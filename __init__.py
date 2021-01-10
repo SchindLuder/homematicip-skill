@@ -81,6 +81,7 @@ class Homematicip(MycroftSkill):
 				temperature = match.group('temp')
 				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
 				self.pixels.off()
+				time.sleep(1)
 
 class APA102:
     """
