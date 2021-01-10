@@ -2,8 +2,14 @@ import os
 import re
 import time
 import subprocess
-import time
 import numpy
+import apa102
+import threading
+from gpiozero import LED
+try:
+    import queue as Queue
+except ImportError:
+    import Queue as Queue
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 
 class Homematicip(MycroftSkill):
