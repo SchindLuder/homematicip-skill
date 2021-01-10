@@ -16,13 +16,13 @@ class Homematicip(MycroftSkill):
 		self.clientPath = self.settings.get('HmipClientPath')
 		pixels.pattern = GoogleHomeLedPattern(show=pixels.show)
 		
-	def leds_thinking():
-		try:
-			pixels.think()            
-			pixels.speak()
-      			pixels.off()
-		except KeyboardInterrupt:
-			return
+	#def leds_thinking():
+	#	try:
+	#		pixels.think()            
+#			pixels.speak()
+#      			pixels.off()
+#		except KeyboardInterrupt:
+#			return
 					
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
