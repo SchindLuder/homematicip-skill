@@ -75,7 +75,7 @@ class Homematicip(MycroftSkill):
 class Pixels:
     PIXELS_N = 12
 
-    def __init__(self, pattern=AlexaLedPattern):
+    def __init__(self, pattern):
         self.pattern = pattern(show=self.show)
 
         self.dev = apa102.APA102(num_led=self.PIXELS_N)
