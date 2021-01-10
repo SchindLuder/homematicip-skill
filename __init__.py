@@ -3,7 +3,6 @@ import re
 import time
 import subprocess
 import time
-from pixels import pixels
 from alexa_led_pattern import AlexaLedPattern
 from google_home_led_pattern import GoogleHomeLedPattern
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
@@ -14,19 +13,12 @@ class Homematicip(MycroftSkill):
 		
 	def initialize(self):
 		self.clientPath = self.settings.get('HmipClientPath')
-		pixels.pattern = GoogleHomeLedPattern(show=pixels.show)
-		
-	#def leds_thinking():
-	#	try:
-	#		pixels.think()            
-#			pixels.speak()
-#      			pixels.off()
-#		except KeyboardInterrupt:
-#			return
+		self.pixels = Pixels()
+		self.pixels.pattern = GoogleHomeLedPattern(show=pixels.show)
 					
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
-		pixels.think()
+		self.pixels.think()
 		room_type = message.data.get('room')
 		if room_type is None:			
 			return
@@ -78,9 +70,67 @@ class Homematicip(MycroftSkill):
 				
 			if  desired_room in roomString:
 				temperature = match.group('temp')
-				pixels.speak()
+				self.pixels.speak()
 				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
-				pixels.off()
+				self.pixels.off()
+class Pixels:
+    PIXELS_N = 12
+
+    def __init__(self, pattern=AlexaLedPattern):
+        self.pattern = pattern(show=self.show)
+
+        self.dev = apa102.APA102(num_led=self.PIXELS_N)
+        
+        self.power = LED(5)
+        self.power.on()
+
+        self.queue = Queue.Queue()
+        self.thread = threading.Thread(target=self._run)
+        self.thread.daemon = True
+        self.thread.start()
+
+        self.last_direction = None
+
+    def wakeup(self, direction=0):
+        self.last_direction = direction
+        def f():
+            self.pattern.wakeup(direction)
+
+        self.put(f)
+
+    def listen(self):
+        if self.last_direction:
+            def f():
+                self.pattern.wakeup(self.last_direction)
+            self.put(f)
+        else:
+            self.put(self.pattern.listen)
+
+    def think(self):
+        self.put(self.pattern.think)
+
+    def speak(self):
+        self.put(self.pattern.speak)
+
+    def off(self):
+        self.put(self.pattern.off)
+
+    def put(self, func):
+        self.pattern.stop = True
+        self.queue.put(func)
+
+    def _run(self):
+        while True:
+            func = self.queue.get()
+            self.pattern.stop = False
+            func()
+
+    def show(self, data):
+        for i in range(self.PIXELS_N):
+            self.dev.set_pixel(i, int(data[4*i + 1]), int(data[4*i + 2]), int(data[4*i + 3]))
+
+        self.dev.show()
+
 				
 def create_skill():
 	return Homematicip()
