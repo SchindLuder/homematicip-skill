@@ -58,11 +58,13 @@ class Homematicip(MycroftSkill):
 			"bedroom" :"schlafzimmer"
 		}
 		
-		if room_type not in room_dict:
+		if room_type not in room_dict:			
 			self.speak_dialog('unknown.room', { 'room' : room_type });
 			return
-		
+				
 		desired_room = str(room_dict[room_type])
+		
+		self.log.info(desired_room)
 		
 		for room in split:
 			roomString = str(room)
