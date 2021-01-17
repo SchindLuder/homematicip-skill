@@ -43,17 +43,24 @@ class Homematicip(MycroftSkill):
 		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory)
 		resultString = str(result.stdout).lower()	
 		split = resultString.split("\\n")
-						
+		
 		room_dict = {
+			"bad" : "wandthermostat bad",
 			"bathroom" : "wandthermostat bad",
 			"restroom" : "wandthermostat bad",
+			"arbeitszimmer" : "arbeitszimmer",
 			"workingroom" : "arbeitszimmer",
+			"wohnzimmer" :"couchzimmer",
 			"couchroom" :"couchzimmer", 
-			"livingroom" :"couchzimmer", 			
+			"livingroom" :"couchzimmer",
+			"küche": "che heizung",
 			"cookingroom": "che heizung",
 			"kitchen": "che heizung",			
 			"kitchenroom": "che heizung",
+			"balkonzimmer": "balkonzimmer",
+			"esszimmer": "balkonzimmer",
 			"diningroom": "balkonzimmer",
+			"schlafzimmer" :"schlafzimmer",
 			"sleepingroom" :"schlafzimmer",
 			"bedroom" :"schlafzimmer"
 		}
