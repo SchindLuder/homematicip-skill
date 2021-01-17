@@ -67,6 +67,8 @@ class Homematicip(MycroftSkill):
 		
 		if room_type not in room_dict:			
 			self.speak_dialog('unknown.room', { 'room' : room_type });
+			self.pixels.off()
+			time.sleep(1)
 			return
 				
 		desired_room = str(room_dict[room_type])
@@ -93,6 +95,9 @@ class Homematicip(MycroftSkill):
 				time.sleep(3)
 				self.pixels.off()
 				time.sleep(1)
+				
+		self.pixels.off()
+		time.sleep(1)
 
 class APA102:
     """
