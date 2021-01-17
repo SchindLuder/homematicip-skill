@@ -32,7 +32,7 @@ class Homematicip(MycroftSkill):
 		if room_type is None:			
 			return
 		
-		room_type = room_type.replace(" ","")
+		#room_type = room_type.replace(" ","")
 		
 		#self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
 
