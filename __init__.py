@@ -26,7 +26,7 @@ class Homematicip(MycroftSkill):
 		self.pixels = Pixels()	
 	
 	@intent_handler('homematicip.set.temperature.intent')
-	# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
+		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
 		self.pixels.listen()
 		time.sleep(1)
 		self.pixels.off()
