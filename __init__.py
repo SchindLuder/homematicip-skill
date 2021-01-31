@@ -27,9 +27,9 @@ class Homematicip(MycroftSkill):
 			"bad" = str(self.settings.get('Bad')),
 			"arbeitszimmer" = str(self.settings.get('Arbeitszimmer')),
 			"esszimmer" = str(self.settings.get('Esszimmer')),
-			"küche" = str(self.settings.get('küche')),
-			"schlafzimmer" = str(self.settings.get('schlafzimmer')),
-			"wohnzimmer" = str(self.settings.get('wohnzimmer'))
+			"küche" = str(self.settings.get('Küche')),
+			"schlafzimmer" = str(self.settings.get('Schlafzimmer')),
+			"wohnzimmer" = str(self.settings.get('Wohnzimmer'))
 		}
 		self.pixels = Pixels()	
 	
