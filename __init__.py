@@ -30,7 +30,21 @@ class Homematicip(MycroftSkill):
 		self.pixels.listen()
 		time.sleep(1)
 		self.pixels.off()
-		time.sleep(1)		
+		time.sleep(1)
+		room_type = message.data.get('room')
+		if room_type is None:			
+			return
+		
+		temperature = message.data.get('temperature')
+		self.log.info(temperature)
+		
+		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
+		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
+		commandString = '--group' + groupId + '--set-point-temperature' + temperature
+		self.log.info(commandString)
+		result = subprocess.run([self.clientPath, commandString ], stdout=subprocess.PIPE, cwd=workingDirectory)
+		#resultString = str(result.stdout).lower()	
+		#split = resultString.split("\\n")
 		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):		
