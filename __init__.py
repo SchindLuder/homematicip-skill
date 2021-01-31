@@ -23,6 +23,14 @@ class Homematicip(MycroftSkill):
 		
 	def initialize(self):
 		self.clientPath = self.settings.get('HmipClientPath')
+		self.groupIds = {
+			"bad" = str(self.settings.get('Bad')),
+			"arbeitszimmer" = str(self.settings.get('Arbeitszimmer')),
+			"esszimmer" = str(self.settings.get('Bad')),
+			"küche" = str(self.settings.get('Bad')),
+			"schlafzimmer" = str(self.settings.get('Bad')),
+			"wohnzimmer" = str(self.settings.get('Bad'))
+		}
 		self.pixels = Pixels()	
 	
 	@intent_handler('homematicip.set.temperature.intent')
@@ -38,6 +46,14 @@ class Homematicip(MycroftSkill):
 		
 		temperature = message.data.get('temperature')
 		self.log.info(temperature)
+		
+		if room_type not in self.groupIds:			
+			self.speak_dialog('unknown.room', { 'room' : room_type });
+			self.pixels.off()
+			time.sleep(1)
+			return
+		
+		groupId = str(self.groupIds[room_type])
 		
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
