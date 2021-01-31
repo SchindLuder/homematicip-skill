@@ -26,10 +26,10 @@ class Homematicip(MycroftSkill):
 		self.groupIds = {
 			"bad" = str(self.settings.get('Bad')),
 			"arbeitszimmer" = str(self.settings.get('Arbeitszimmer')),
-			"esszimmer" = str(self.settings.get('Bad')),
-			"küche" = str(self.settings.get('Bad')),
-			"schlafzimmer" = str(self.settings.get('Bad')),
-			"wohnzimmer" = str(self.settings.get('Bad'))
+			"esszimmer" = str(self.settings.get('Esszimmer')),
+			"küche" = str(self.settings.get('küche')),
+			"schlafzimmer" = str(self.settings.get('schlafzimmer')),
+			"wohnzimmer" = str(self.settings.get('wohnzimmer'))
 		}
 		self.pixels = Pixels()	
 	
