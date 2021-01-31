@@ -36,7 +36,6 @@ class Homematicip(MycroftSkill):
 	@intent_handler('homematicip.set.temperature.intent')
 	def handle_set_temperature(self, message):
 		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
-		self.log.info('message:' + message)
 		room_type = message.data.get('room')
 		temperature = message.data.get('temperature')
 		self.log.info('temperature:' + temperature)
