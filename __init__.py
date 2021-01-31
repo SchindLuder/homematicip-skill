@@ -36,15 +36,15 @@ class Homematicip(MycroftSkill):
 	@intent_handler('homematicip.set.temperature.intent')
 	def handle_set_temperature(self, message):
 		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
-		self.pixels.listen()
-		time.sleep(1)
-		self.pixels.off()
-		time.sleep(1)
+		self.log.info('message:' + message)
 		room_type = message.data.get('room')
-		if room_type is None:			
+		temperature = message.data.get('temperature')
+		self.log.info('temperature:' + temperature)
+		self.log.info('room:' + room_type)
+		if room_type is None:	
 			return
 		
-		temperature = message.data.get('temperature')
+		
 		self.log.info(temperature)
 		
 		if room_type not in self.groupIds:			
