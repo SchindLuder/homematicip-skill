@@ -24,12 +24,12 @@ class Homematicip(MycroftSkill):
 	def initialize(self):
 		self.clientPath = self.settings.get('HmipClientPath')
 		self.groupIds = {
-			"bad" = str(self.settings.get('Bad')),
-			"arbeitszimmer" = str(self.settings.get('Arbeitszimmer')),
-			"esszimmer" = str(self.settings.get('Esszimmer')),
-			"küche" = str(self.settings.get('Küche')),
-			"schlafzimmer" = str(self.settings.get('Schlafzimmer')),
-			"wohnzimmer" = str(self.settings.get('Wohnzimmer'))
+			"bad" : str(self.settings.get('Bad')),
+			"arbeitszimmer" : str(self.settings.get('Arbeitszimmer')),
+			"esszimmer" : str(self.settings.get('Esszimmer')),
+			"küche" : str(self.settings.get('Küche')),
+			"schlafzimmer" : str(self.settings.get('Schlafzimmer')),
+			"wohnzimmer" : str(self.settings.get('Wohnzimmer'))
 		}
 		self.pixels = Pixels()	
 	
