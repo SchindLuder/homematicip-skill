@@ -34,16 +34,16 @@ class Homematicip(MycroftSkill):
 		self.pixels = Pixels()
 		
 	def getGroupIdForRoom(self, room):
-		if room_type is None:	
+		if room is None:	
 			return null
 	
 		if room_type not in self.groupIds:			
-			self.speak_dialog('unknown.room', { 'room' : room_type });
+			self.speak_dialog('unknown.room', { 'room' : room });
 			self.pixels.off()
 			time.sleep(1)
 			return null
 		
-		return str(self.groupIds[room_type])
+		return str(self.groupIds[room])
 		
 	@intent_handler('boost.intent')
 	def handle_boost(self, message): 
