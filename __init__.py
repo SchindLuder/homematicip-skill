@@ -42,10 +42,7 @@ class Homematicip(MycroftSkill):
 		self.log.info('room:' + room_type)
 		if room_type is None:	
 			return
-		
-		
-		self.log.info(temperature)
-		
+	
 		if room_type not in self.groupIds:			
 			self.speak_dialog('unknown.room', { 'room' : room_type });
 			self.pixels.off()
@@ -57,13 +54,13 @@ class Homematicip(MycroftSkill):
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
 		#'-g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-point-temperature 21'		
-		groupString = '-g ' + str(groupId)
+		groupString = '-g ' + groupId
 		temperatureString = '--set-point-temperature ' + str(temperature)
 		commandString = groupString + ' ' + temperatureString
 		self.log.info(commandString)
 		
 		#result = subprocess.run([self.clientPath, groupString, temperatureString], stdout=subprocess.PIPE, cwd=workingDirectory)
-		result = subprocess.run(self.clientPath + ' ' + groupString + ' ' + temperatureString, stdout=subprocess.PIPE, cwd=workingDirectory)
+		result = subprocess.run([self.clientPath, [groupString, temperatureString]], stdout=subprocess.PIPE, cwd=workingDirectory)
 		self.log.info(str(result))
 		#resultString = str(result.stdout).lower()	
 		#split = resultString.split("\\n")
