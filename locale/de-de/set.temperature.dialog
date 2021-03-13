@@ -1,1 +1,9 @@
-
+{room} {temperature} geht klar
+{temperature} in {room} geht klar
+Wie du wünschst
+{room} ist auf {temperature} eingestellt
+{room} wird auf {temperature} eingestellt
+Hab die Heizung in {room} auf {temperature} gedreht
+{room} steht jetzt auf {temperature}
+Wird gemacht.
+{room} hab ich für dich eingestellt
