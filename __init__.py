@@ -31,7 +31,39 @@ class Homematicip(MycroftSkill):
 			"schlafzimmer" : str(self.settings.get('Schlafzimmer')),
 			"wohnzimmer" : str(self.settings.get('Wohnzimmer'))
 		}
-		self.pixels = Pixels()	
+		self.pixels = Pixels()
+		
+	def getGroupIdForRoom(room)
+		if room_type is None:	
+			return null
+	
+		if room_type not in self.groupIds:			
+			self.speak_dialog('unknown.room', { 'room' : room_type });
+			self.pixels.off()
+			time.sleep(1)
+			return null
+		
+		return str(self.groupIds[room_type])
+		
+	@intent_handler('boost.intent')
+	def handle_boost(self, message): 
+		#hmip_cli.py -g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-boost
+		self.pixels.listen()
+		time.sleep(1)
+		
+		room_type = message.data.get('room')		
+		groupId = getGroupIdForRoom(room_type)
+		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
+		arguments = [self.clientPath, "-g", groupId, "--set-boost"]
+		subprocess.Popen(arguments, cwd=workingDirectory);		
+		
+		self.speak_dialog('boost', { 
+			'room' : room_type
+		});
+		
+		self.pixels.off()
+		time.sleep(1)	
+	
 	
 	@intent_handler('homematicip.set.temperature.intent')
 	def handle_set_temperature(self, message):
