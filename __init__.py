@@ -56,9 +56,11 @@ class Homematicip(MycroftSkill):
 		
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
-		commandString = '-g ' + groupId + ' --set-point-temperature ' + temperature
+		#-g 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 23
+		#'-g ' + groupId + ' --set-point-temperature ' + temperature
+		commandString = '-g 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 21'
 		self.log.info(commandString)
-		result = subprocess.run([self.clientPath, commandString ], stdout=subprocess.PIPE, cwd=workingDirectory)
+		result = subprocess.run([self.clientPath, commandString], stdout=subprocess.PIPE, cwd=workingDirectory)
 		#resultString = str(result.stdout).lower()	
 		#split = resultString.split("\\n")
 		
