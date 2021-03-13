@@ -41,8 +41,7 @@ class Homematicip(MycroftSkill):
 		self.log.info('temperature:' + temperature)
 		self.log.info('room:' + room_type)
 		if room_type is None:	
-			return
-		
+			return		
 		
 		self.log.info(temperature)
 		
@@ -456,4 +455,3 @@ class Pixels:
 				
 def create_skill():
 	return Homematicip()
-
