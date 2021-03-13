@@ -59,9 +59,14 @@ class Homematicip(MycroftSkill):
 		commandString = groupString + ' ' + temperatureString
 		self.log.info(commandString)
 		
+		
+		process = Popen([self.clientPath, groupString, temperatureString]);
+		
+		self.log.info(str(process))
+		
 		#result = subprocess.run([self.clientPath, groupString, temperatureString], stdout=subprocess.PIPE, cwd=workingDirectory)
-		result = subprocess.run([self.clientPath, [groupString, temperatureString]], stdout=subprocess.PIPE, cwd=workingDirectory)
-		self.log.info(str(result))
+		#result = subprocess.run([self.clientPath, [groupString, temperatureString]], stdout=subprocess.PIPE, cwd=workingDirectory)
+		#self.log.info(str(result))
 		#resultString = str(result.stdout).lower()	
 		#split = resultString.split("\\n")
 		
