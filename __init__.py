@@ -35,13 +35,13 @@ class Homematicip(MycroftSkill):
 		
 	def getGroupIdForRoom(self, room):
 		if room is None:	
-			return null
+			return None
 	
 		if room not in self.groupIds:			
 			self.speak_dialog('unknown.room', { 'room' : room });
 			self.pixels.off()
 			time.sleep(1)
-			return null
+			return None
 		
 		return str(self.groupIds[room])
 		
@@ -53,7 +53,7 @@ class Homematicip(MycroftSkill):
 		
 		room_type = message.data.get('room')		
 		groupId = self.getGroupIdForRoom(room_type)
-		if groupId is null:
+		if groupId is None:
 			return
 		
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
@@ -81,7 +81,7 @@ class Homematicip(MycroftSkill):
 		temperature = temperature.replace(",",".")
 		
 		groupId = self.getGroupIdForRoom(room_type)
-		if groupId is null:
+		if groupId is None:
 			return		
 		
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
