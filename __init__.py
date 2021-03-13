@@ -52,7 +52,7 @@ class Homematicip(MycroftSkill):
 		time.sleep(1)
 		
 		room_type = message.data.get('room')		
-		groupId = getGroupIdForRoom(room_type)
+		groupId = self.getGroupIdForRoom(room_type)
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
 		arguments = [self.clientPath, "-g", groupId, "--set-boost"]
 		subprocess.Popen(arguments, cwd=workingDirectory);		
