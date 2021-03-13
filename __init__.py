@@ -37,6 +37,10 @@ class Homematicip(MycroftSkill):
 	def handle_set_temperature(self, message):
 		# example for cli call:
 		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
+		
+		self.pixels.listen()
+		time.sleep(1)
+		
 		room_type = message.data.get('room')
 		temperature = str(message.data.get('temperature'))
 		temperature = temperature.replace(",",".")
@@ -59,15 +63,15 @@ class Homematicip(MycroftSkill):
 		commandString = groupString + ' ' + temperatureString
 		self.log.info(commandString)		
 		arguments = [self.clientPath, "-g", groupId, "--set-point-temperature", str(temperature)]
-		process = subprocess.Popen(arguments, cwd=workingDirectory);
+		subprocess.Popen(arguments, cwd=workingDirectory);
 		
-		self.log.info(str(process))
+		self.pixels.off()
+		time.sleep(1)	
 		
-		#result = subprocess.run([self.clientPath, groupString, temperatureString], stdout=subprocess.PIPE, cwd=workingDirectory)
-		#result = subprocess.run([self.clientPath, [groupString, temperatureString]], stdout=subprocess.PIPE, cwd=workingDirectory)
-		#self.log.info(str(result))
-		#resultString = str(result.stdout).lower()	
-		#split = resultString.split("\\n")
+		self.speak_dialog('set.temperature', { 
+			'room' : room_type,
+			'temperature' : temperature
+		});			
 		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):	
