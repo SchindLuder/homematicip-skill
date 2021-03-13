@@ -59,7 +59,7 @@ class Homematicip(MycroftSkill):
 		commandString = groupString + ' ' + temperatureString
 		self.log.info(commandString)		
 		arguments = [self.clientPath, "-g", groupId, "--set-point-temperature", str(temperature)]
-		process = subprocess.Popen(arguments);
+		process = subprocess.Popen(arguments, cwd=workingDirectory);
 		
 		self.log.info(str(process))
 		
