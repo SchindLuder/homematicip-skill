@@ -59,9 +59,10 @@ class Homematicip(MycroftSkill):
 		#-g 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 23
 		#'-g ' + groupId + ' --set-point-temperature ' + temperature
 		#'-g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-point-temperature 21'		
-		commandString = '-g' + str(groupId) #+ '   --set-point-temperature ' + str(temperature)
+		commandString = '-g' + str(groupId) + '   --set-point-temperature' + str(temperature)
 		self.log.info(commandString)
 		result = subprocess.run([self.clientPath, commandString], stdout=subprocess.PIPE, cwd=workingDirectory)
+		self.log.info(str(result))
 		#resultString = str(result.stdout).lower()	
 		#split = resultString.split("\\n")
 		
