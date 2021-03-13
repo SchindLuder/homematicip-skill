@@ -33,7 +33,7 @@ class Homematicip(MycroftSkill):
 		}
 		self.pixels = Pixels()
 		
-	def getGroupIdForRoom(room)
+	def getGroupIdForRoom(room):
 		if room_type is None:	
 			return null
 	
