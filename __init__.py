@@ -53,6 +53,9 @@ class Homematicip(MycroftSkill):
 		
 		room_type = message.data.get('room')		
 		groupId = self.getGroupIdForRoom(room_type)
+		if groupId is null:
+			return
+		
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
 		arguments = [self.clientPath, "-g", groupId, "--set-boost"]
 		subprocess.Popen(arguments, cwd=workingDirectory);		
@@ -76,24 +79,14 @@ class Homematicip(MycroftSkill):
 		room_type = message.data.get('room')
 		temperature = str(message.data.get('temperature'))
 		temperature = temperature.replace(",",".")
-		if room_type is None:	
-			return
-	
-		if room_type not in self.groupIds:			
-			self.speak_dialog('unknown.room', { 'room' : room_type });
-			self.pixels.off()
-			time.sleep(1)
-			return
 		
-		groupId = str(self.groupIds[room_type])
+		groupId = self.getGroupIdForRoom(room_type)
+		if groupId is null:
+			return		
 		
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
 		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
 		#'-g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-point-temperature 21'		
-		groupString = '-g ' + groupId
-		temperatureString = '--set-point-temperature ' + str(temperature)
-		commandString = groupString + ' ' + temperatureString
-		self.log.info(commandString)		
 		arguments = [self.clientPath, "-g", groupId, "--set-point-temperature", str(temperature)]
 		subprocess.Popen(arguments, cwd=workingDirectory);
 		
