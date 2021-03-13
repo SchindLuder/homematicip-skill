@@ -37,7 +37,7 @@ class Homematicip(MycroftSkill):
 		if room is None:	
 			return null
 	
-		if room_type not in self.groupIds:			
+		if room not in self.groupIds:			
 			self.speak_dialog('unknown.room', { 'room' : room });
 			self.pixels.off()
 			time.sleep(1)
