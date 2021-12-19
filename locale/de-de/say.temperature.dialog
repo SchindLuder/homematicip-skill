@@ -1,6 +1,12 @@
 {room} ist {temperature} °C warm
 {room} hat {temperature} Grad
 Kuschelige {temperature} Grad erwarten dich in {room}
+Dort sind {temperature} Grad
+{room}? {temperature} grad
+sollten {temperature] grad sein.
+Dort sind {temperature} grad.
+aktuell {temperature} grad.
+Gerade sind da {temperature} grad.
 Ich war kurz schauen. Es sind {temperature}
 Das Thermostat hat mir verraten, dass es {temperature} Grad sind
 {temperature} in {room}

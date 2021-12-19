@@ -22,7 +22,6 @@ class Homematicip(MycroftSkill):
 		MycroftSkill.__init__(self)
 		
 	def initialize(self):
-		self.clientPath = self.settings.get('HmipClientPath')
 		self.groupIds = {
 			"bad" : str(self.settings.get('Bad')),
 			"arbeitszimmer" : str(self.settings.get('Arbeitszimmer')),
@@ -31,35 +30,70 @@ class Homematicip(MycroftSkill):
 			"schlafzimmer" : str(self.settings.get('Schlafzimmer')),
 			"wohnzimmer" : str(self.settings.get('Wohnzimmer'))
 		}
-		self.pixels = Pixels()	
+		self.pixels = Pixels()
+		
+	def getGroupIdForRoom(self, room):
+		if room is None:	
+			return None
+	
+		if room not in self.groupIds:			
+			self.speak_dialog('unknown.room', { 'room' : room });
+			self.pixels.off()
+			time.sleep(1)
+			return None
+		
+		return str(self.groupIds[room])
+		
+	@intent_handler('boost.intent')
+	def handle_boost(self, message): 
+		#hmip_cli.py -g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-boost
+		self.pixels.listen()
+		time.sleep(1)
+		
+		room_type = message.data.get('room')		
+		groupId = self.getGroupIdForRoom(room_type)
+		if groupId is None:
+			return
+		
+		arguments = ['hmip_cli.py', "-g", groupId, "--set-boost"]
+		subprocess.Popen(arguments);		
+		
+		self.speak_dialog('boost', { 
+			'room' : room_type
+		});
+		
+		self.pixels.off()
+		time.sleep(1)	
+	
 	
 	@intent_handler('homematicip.set.temperature.intent')
 	def handle_set_temperature(self, message):
+		# example for cli call:
 		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
+	
+		self.pixels.listen()
+		time.sleep(1)
+		
 		room_type = message.data.get('room')
-		temperature = message.data.get('temperature')
-		self.log.info('temperature:' + temperature)
-		self.log.info('room:' + room_type)
-		if room_type is None:	
+		temperature = str(message.data.get('temperature'))
+		temperature = temperature.replace(",",".")
+		
+		groupId = self.getGroupIdForRoom(room_type)
+		if groupId is None:
 			return		
 		
-		self.log.info(temperature)
-		
-		if room_type not in self.groupIds:			
-			self.speak_dialog('unknown.room', { 'room' : room_type });
-			self.pixels.off()
-			time.sleep(1)
-			return
-		
-		groupId = str(self.groupIds[room_type])
-		
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
-		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))		
-		commandString = '--group' + groupId + '--set-point-temperature' + temperature
-		self.log.info(commandString)
-		result = subprocess.run([self.clientPath, commandString ], stdout=subprocess.PIPE, cwd=workingDirectory)
-		#resultString = str(result.stdout).lower()	
-		#split = resultString.split("\\n")
+		#'-g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-point-temperature 21'		
+		arguments = ['hmip_cli.py', "-g", groupId, "--set-point-temperature", str(temperature)]
+		subprocess.Popen(arguments);
+		
+		self.pixels.off()
+		time.sleep(1)	
+		
+		self.speak_dialog('set.temperature', { 
+			'room' : room_type,
+			'temperature' : temperature
+		});			
 		
 	@intent_handler('homematicip.get.temperature.intent')
 	def handle_get_temperature(self, message):	
@@ -73,10 +107,7 @@ class Homematicip(MycroftSkill):
 		#self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
 
 		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
-		workingDirectory = os.path.dirname(os.path.abspath(self.clientPath))
-		self.log.info('trying to run client command from: ' + self.clientPath + ' workingDir:' + workingDirectory)
-		
-		result = subprocess.run([self.clientPath, '--list-devices'], stdout=subprocess.PIPE, cwd=workingDirectory)
+		result = subprocess.run(['hmip_cli.py', '--list-devices'], stdout=subprocess.PIPE)
 		resultString = str(result.stdout).lower()	
 		split = resultString.split("\\n")
 		
