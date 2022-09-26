@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\locale"
   ],
-  "SelectedNode": "\\__init__.py",
+  "SelectedNode": "\\HomematicIpWrapper.py",
   "PreviewInSolutionExplorer": false
 }
