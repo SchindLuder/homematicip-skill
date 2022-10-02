@@ -1,4 +1,5 @@
 from HomematicIpWrapper import HomematicIpWrapper
+from HomematicIpWrapper import homematicIpStatusCode
 
 class log(object):
 	def info(self,message):
@@ -22,8 +23,17 @@ class selfMockup(object):
 
 self = selfMockup()
 
-homematicIp = HomematicIpWrapper()
+homematicIp = HomematicIpWrapper(self.log)
 
-thermostates = homematicIp.getRoomByName("Bad")
-a = thermostates
+(statusCode, temperature) = homematicIp.getRoomTemperature("Bad")
+
+(statusCode) = homematicIp.setRoomTemperature("Bad",21.0)
+
+if statusCode != homematicIpStatusCode.Ok:
+	self.log.info(f'setTemp returned {statusCode}' )
+
+homematicIp.deactivateBoost('Arbeitszimmer')
+
+
+a = temp
 

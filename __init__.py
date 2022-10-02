@@ -16,53 +16,35 @@ try:
 except ImportError:
     import Queue as Queue
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
+from . import HomematicIpWrapper
+from . import homematicIpStatusCode
 
 class Homematicip(MycroftSkill):
 	def __init__(self):
 		MycroftSkill.__init__(self)
 		
 	def initialize(self):
-		self.groupIds = {
-			"bad" : str(self.settings.get('Bad')),
-			"arbeitszimmer" : str(self.settings.get('Arbeitszimmer')),
-			"esszimmer" : str(self.settings.get('Esszimmer')),
-			"küche" : str(self.settings.get('Küche')),
-			"schlafzimmer" : str(self.settings.get('Schlafzimmer')),
-			"wohnzimmer" : str(self.settings.get('Wohnzimmer'))
-		}
 		self.pixels = Pixels()
-		
-	def getGroupIdForRoom(self, room):
-		if room is None:	
-			return None
-	
-		if room not in self.groupIds:			
-			self.speak_dialog('unknown.room', { 'room' : room });
-			self.pixels.off()
-			time.sleep(1)
-			return None
-		
-		return str(self.groupIds[room])
-		
-	@intent_handler('boost.intent')
-	def handle_boost(self, message): 
+        self.homematicIp = HomematicIpWrapper.HomematicIpWrapper(self.log)
+
+    @intent_handler('boost.intent')
+    def handle_boost(self, message): 
 		#hmip_cli.py -g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-boost
 		self.pixels.listen()
 		time.sleep(1)
 		
-		room_type = message.data.get('room')		
-		groupId = self.getGroupIdForRoom(room_type)
-		if groupId is None:
-			return
-		
-		arguments = ['hmip_cli.py', "-g", groupId, "--set-boost"]
-		subprocess.Popen(arguments);		
-		
-		self.speak_dialog('boost', { 
-			'room' : room_type
-		});
-		
-		self.pixels.off()
+		roomName = message.data.get('room')
+
+        status = self.homematicIp.activateBoost(roomName)
+
+        if status is homematicIpStatusCode.Ok:
+            self.speak_dialog('boost', { 
+			    'room' : roomName
+            });
+        else:
+            self.speak_dialog('unknown.room', { 'room' : roomName });
+        
+        self.pixels.off()
 		time.sleep(1)	
 	
 	
