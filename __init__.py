@@ -33,7 +33,7 @@ class Homematicip(MycroftSkill):
         roomName = message.data.get('room')
         status = self.homematicIp.activateBoost(roomName)
         
-        self.log.debug(str(status))
+        self.log.info(str(status))
 
         if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
             self.speak_dialog('boost', { 
