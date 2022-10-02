@@ -25,9 +25,7 @@ self = selfMockup()
 
 homematicIp = HomematicIpWrapper(self.log)
 
-(statusCode, temperature) = homematicIp.getRoomTemperature("Bad")
-
-(statusCode) = homematicIp.setRoomTemperature("Bad",21.0)
+(statusCode, temperature) = homematicIp.getRoomTemperature("Arbeitszimmer")
 
 if statusCode != HomematicIpStatusCode.Ok:
 	self.log.info(f'setTemp returned {statusCode}' )
