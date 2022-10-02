@@ -1,5 +1,5 @@
 from HomematicIpWrapper import HomematicIpWrapper
-from HomematicIpWrapper import homematicIpStatusCode
+from HomematicIpWrapper import HomematicIpStatusCode
 
 class log(object):
 	def info(self,message):
@@ -29,7 +29,7 @@ homematicIp = HomematicIpWrapper(self.log)
 
 (statusCode) = homematicIp.setRoomTemperature("Bad",21.0)
 
-if statusCode != homematicIpStatusCode.Ok:
+if statusCode != HomematicIpStatusCode.Ok:
 	self.log.info(f'setTemp returned {statusCode}' )
 
 homematicIp.deactivateBoost('Arbeitszimmer')

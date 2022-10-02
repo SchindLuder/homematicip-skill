@@ -5,7 +5,7 @@ from homematicip.device import TemperatureHumiditySensorDisplay
 from homematicip.group import HeatingGroup
 from enum import Enum
 
-class homematicIpStatusCode(Enum):
+class HomematicIpStatusCode(Enum):
     Ok = 0
     MinTempExceeded = 1
     MaxTempExceeded = 2
@@ -40,60 +40,60 @@ class HomematicIpWrapper():
 
     _getRoomByName.__doc__ = "Returns HeatingGroup with matching label or None"
 
-    def getRoomTemperature(self, roomName: str) -> (homematicIpStatusCode,float):
+    def getRoomTemperature(self, roomName: str) -> (HomematicIpStatusCode,float):
         self.home.get_current_state()
 
         room = self._getRoomByName(roomName)
 
         if room is None:
             self.log.info(f'Could not return temperature as no room was found for name \'{roomName}\'')
-            return (homematicIpStatusCode.UnknownRoom, None)
+            return (HomematicIpStatusCode.UnknownRoom, None)
 
-        return (homematicIpStatusCode.Ok, room.actualTemperature)
-    getRoomTemperature.__doc__ ="Gets temperature of the room. Return (homematicIpStatusCode, float)"
+        return (HomematicIpStatusCode.Ok, room.actualTemperature)
+    getRoomTemperature.__doc__ ="Gets temperature of the room. Return (HomematicIpStatusCode, float)"
 
-    def setRoomTemperature(self, roomName: str, temperature: float) -> homematicIpStatusCode:
+    def setRoomTemperature(self, roomName: str, temperature: float) -> HomematicIpStatusCode:
         self.home.get_current_state()
         room = self._getRoomByName(roomName)
 
         if room is None:
             self.log.info(f'Could not set temperature as no room was found for name \'{roomName}\'')
-            return homematicIpStatusCode.UnknownRoom, 
+            return HomematicIpStatusCode.UnknownRoom, 
 
         if temperature > room.maxTemperature:
-            return homematicIpStatusCode.MaxTempExceeded
+            return HomematicIpStatusCode.MaxTempExceeded
 
         if temperature < room.minTemperature:
-            return homematicIpStatusCode.MinTempExceeded
+            return HomematicIpStatusCode.MinTempExceeded
 
         retVal = room.set_point_temperature(temperature)
 
         if retVal is '': 
             # setting of temperature was successful
-            return homematicIpStatusCode.Ok
+            return HomematicIpStatusCode.Ok
 
         self.log.info(f'Could not set temperature: {retVal}')
-        return homematicIpStatusCode.Error
+        return HomematicIpStatusCode.Error
     _getRoomByName.__doc__ = "Sets setPoint temperature for room and returns state"
 
-    def activateBoost(self, roomame: str) -> (homematicIpStatusCode):
+    def activateBoost(self, roomame: str) -> (HomematicIpStatusCode):
         room = self._getRoomByName(roomName)
 
         if room is None: 
-            return homematicIpStatusCode.UnknownRoom
+            return HomematicIpStatusCode.UnknownRoom
 
         retVal = room.set_boost()
 
         if retVal is None: 
-            return homematicIpStatusCode.Ok
+            return HomematicIpStatusCode.Ok
 
-        return homematicIpStatusCode.Error
+        return HomematicIpStatusCode.Error
 
-    def deactivateBoost(self, roomName: str) -> (homematicIpStatusCode):
+    def deactivateBoost(self, roomName: str) -> (HomematicIpStatusCode):
         room = self._getRoomByName(roomName)
 
         if room is None: 
-            return homematicIpStatusCode.UnknownRoom
+            return HomematicIpStatusCode.UnknownRoom
 
         room.set_boost(False)
         
