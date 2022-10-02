@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\locale"
+    "\\locale",
+    "\\locale\\de-de"
   ],
-  "SelectedNode": "\\HomematicTester.py",
+  "SelectedNode": "\\locale\\de-de\\unknown.error.dialog",
   "PreviewInSolutionExplorer": false
 }

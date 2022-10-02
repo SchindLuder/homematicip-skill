@@ -32,20 +32,11 @@ class Homematicip(MycroftSkill):
         time.sleep(1)
         roomName = message.data.get('room')
         status = self.homematicIp.activateBoost(roomName)
-        
-        self.log.info(str(status))
 
-        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
-            self.speak_dialog('boost', { 
+        self.speakCommandResult(status, roomName, lambda : self.speak_dialog('boost', { 
 			    'room' : roomName
-            });
-        elif status is HomematicIpWrapper.HomematicIpStatusCode.CommandAlreadyActive:
-            self.speak_dialog('commandAlreadyActive', { 'room' : roomName });
-        elif status is HomematicIpWrapper.HomematicIpStatusCode.UnknownRoom:        
-            self.speak_dialog('unknown.room', { 'room' : roomName });
-        else:
-            self.speak_dialog('unknown.error')
-        
+            }))
+
         self.pixels.off()
         time.sleep(1)
     
@@ -53,13 +44,19 @@ class Homematicip(MycroftSkill):
     def handle_set_temperature(self, message):
         self.pixels.listen()
         time.sleep(1)
-        room_type = message.data.get('room')
+        roomName = message.data.get('room')
+        temperature = message.data.get('temperature')
+
+        status = self.homematicIp.setRoomTemperature(roomName, temperature)
+
+        self.speakCommandResult(roomName, status, lambda : self.speak_dialog('set.temperature', { 
+			    'room' : roomName,
+			    'temperature' : temperature
+		    }))
+
         self.pixels.off()
         time.sleep(1)
-        self.speak_dialog('set.temperature', { 
-			'room' : room_type,
-			'temperature' : temperature
-		});
+
     @intent_handler('homematicip.get.temperature.intent')
     def handle_get_temperature(self, message):
         self.pixels.listen()
@@ -67,13 +64,28 @@ class Homematicip(MycroftSkill):
         if room_type is None:
             return
         
+
+        (status, temperature) = self.homematicIp.getRoomTemperature(roomName)
+
         self.pixels.speak()
-        self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
+        self.speakCommandResult(roomName, status, lambda : self.speak_dialog('say.temperature', { 
+			    'room' : roomName,
+			    'temperature' : temperature
+		    }))
+                
         time.sleep(3)
-        self.pixels.off()
+        self.pixels.off()                
         time.sleep(1)
-        self.pixels.off()
-        time.sleep(1)
+
+    def speakCommandResult(self, roomName, status:HomematicIpWrapper.HomematicIpStatusCode, okDialog: function):
+        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
+            okDialog()
+        elif status is HomematicIpWrapper.HomematicIpStatusCode.CommandAlreadyActive:
+            self.speak_dialog('commandAlreadyActive', { 'room' : roomName });
+        elif status is HomematicIpWrapper.HomematicIpStatusCode.UnknownRoom:        
+            self.speak_dialog('unknown.room', { 'room' : roomName });
+        else:
+            self.speak_dialog('unknown.error')
 
 class APA102:
     """

@@ -61,6 +61,9 @@ class HomematicIpWrapper():
             self.log.info(f'Could not set temperature as no room was found for name \'{roomName}\'')
             return HomematicIpStatusCode.UnknownRoom, 
 
+        if temperature == room.setPointTemperature:
+            return HomematicIpStatusCode.CommandAlreadyActive
+
         if temperature > room.maxTemperature:
             return HomematicIpStatusCode.MaxTempExceeded
 
