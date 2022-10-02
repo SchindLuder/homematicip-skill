@@ -66,9 +66,9 @@ class Homematicip(MycroftSkill):
         
         (status, temperature) = self.homematicIp.getRoomTemperature(roomName)
 
-        #self.log.info(f'status:  {str(status)}')
-        #self.log.info(f'temperature:  {str(temperature)}')
-        #self.log.info(f'{roomName} has {temperature}')
+        self.log.info(f'status:  {str(status)}')
+        self.log.info(f'temperature:  {str(temperature)}')
+        self.log.info(f'{roomName} has {temperature}')
 
         self.pixels.speak()
         self.speakCommandResult(roomName, status, lambda : self.speak_dialog('say.temperature', { 

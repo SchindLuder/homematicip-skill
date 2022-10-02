@@ -50,20 +50,22 @@ class HomematicIpWrapper():
             self.log.info(f'Could not return temperature as no room was found for name \'{roomName}\'')
             return (HomematicIpStatusCode.UnknownRoom, None)
 
-        if room.actualTemperature is None: 
-            #for some reason the room does not have a temperature
-            for device in room.devices:
-                #check for any wallmounted thermostat and retrieve actualTemperature
-                if hasattr(device, 'actualTemperature') and device.actualTemperature is not None:
-                    return (HomematicIpStatusCode.Ok, device.actualTemperature)
+        if room.actualTemperature is not None: 
+            return (HomematicIpStatusCode.Ok, room.actualTemperature)
 
-                #check for any thermostat and get the valveActualTemperature
-                if hasattr(device, 'valveActualTemperature') and device.valveActualTemperature is not None:
-                    return (HomematicIpStatusCode.Ok, device.valveActualTemperature)
+        #for some reason the room does not have a temperature
+        for device in room.devices:
+            #check for any wallmounted thermostat and retrieve actualTemperature
+            if hasattr(device, 'actualTemperature') and device.actualTemperature is not None:
+                return (HomematicIpStatusCode.Ok, device.actualTemperature)
 
-                return (HomematicIpStatusCode.Error, None)                
+            #check for any thermostat and get the valveActualTemperature
+            if hasattr(device, 'valveActualTemperature') and device.valveActualTemperature is not None:
+                return (HomematicIpStatusCode.Ok, device.valveActualTemperature)
 
-        return (HomematicIpStatusCode.Ok, room.actualTemperature)
+        return (HomematicIpStatusCode.Error, None)                
+
+        
 
     getRoomTemperature.__doc__ ="Gets temperature of the room. Return (HomematicIpStatusCode, float)"
 
