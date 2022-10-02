@@ -76,7 +76,7 @@ class HomematicIpWrapper():
         return HomematicIpStatusCode.Error
     _getRoomByName.__doc__ = "Sets setPoint temperature for room and returns state"
 
-    def activateBoost(self, roomame: str) -> (HomematicIpStatusCode):
+    def activateBoost(self, roomName: str) -> (HomematicIpStatusCode):
         room = self._getRoomByName(roomName)
 
         if room is None: 
