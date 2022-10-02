@@ -39,8 +39,12 @@ class Homematicip(MycroftSkill):
             self.speak_dialog('boost', { 
 			    'room' : roomName
             });
-        else:
+        elif status is HomematicIpWrapper.HomematicIpStatusCode.CommandAlreadyActive:
+            self.speak_dialog('commandAlreadyActive', { 'room' : roomName });
+        elif status is HomematicIpWrapper.HomematicIpStatusCode.UnknownRoom:        
             self.speak_dialog('unknown.room', { 'room' : roomName });
+        else:
+            self.speak_dialog('unknown.error')
         
         self.pixels.off()
         time.sleep(1)

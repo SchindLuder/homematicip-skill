@@ -10,7 +10,8 @@ class HomematicIpStatusCode(Enum):
     MinTempExceeded = 1
     MaxTempExceeded = 2
     UnknownRoom = 3
-    Error = 4
+    CommandAlreadyActive = 4
+    Error = 5
 
 class HomematicIpWrapper():
     def __init__(self, loggingMethod, *args, **kwargs):
@@ -82,9 +83,12 @@ class HomematicIpWrapper():
         if room is None: 
             return HomematicIpStatusCode.UnknownRoom
 
+        if room.boostMode is True:
+            return HomematicIpStatusCode.CommandAlreadyActive
+
         retVal = room.set_boost()
 
-        if retVal is None: 
+        if retVal is '': 
             return HomematicIpStatusCode.Ok
 
         return HomematicIpStatusCode.Error
@@ -95,7 +99,15 @@ class HomematicIpWrapper():
         if room is None: 
             return HomematicIpStatusCode.UnknownRoom
 
-        room.set_boost(False)
+        if room.boostMode is False:
+            return HomematicIpStatusCode.CommandAlreadyActive
+
+        retVal = room.set_boost(False)
+
+        if retVal is '': 
+            return HomematicIpStatusCode.Ok
+
+        return HomematicIpStatusCode.Error
         
 
 

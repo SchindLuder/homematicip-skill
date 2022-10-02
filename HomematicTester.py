@@ -32,7 +32,7 @@ homematicIp = HomematicIpWrapper(self.log)
 if statusCode != HomematicIpStatusCode.Ok:
 	self.log.info(f'setTemp returned {statusCode}' )
 
-homematicIp.deactivateBoost('Arbeitszimmer')
+homematicIp.activateBoost('Arbeitszimmer')
 
 
 a = temp
