@@ -20,23 +20,20 @@ from . import HomematicIpWrapper
 from . import homematicIpStatusCode
 
 class Homematicip(MycroftSkill):
-	def __init__(self):
-		MycroftSkill.__init__(self)
-		
-	def initialize(self):
-		self.pixels = Pixels()
+    def __init__(self):
+        MycroftSkill.__init__(self)
+    
+    def initialize(self):
+        self.pixels = Pixels()
         self.homematicIp = HomematicIpWrapper.HomematicIpWrapper(self.log)
-
+        
     @intent_handler('boost.intent')
-    def handle_boost(self, message): 
-		#hmip_cli.py -g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-boost
-		self.pixels.listen()
-		time.sleep(1)
-		
-		roomName = message.data.get('room')
-
+    def handle_boost(self, message):
+        self.pixels.listen()
+        time.sleep(1)
+        roomName = message.data.get('room')
         status = self.homematicIp.activateBoost(roomName)
-
+        
         if status is homematicIpStatusCode.Ok:
             self.speak_dialog('boost', { 
 			    'room' : roomName
@@ -45,108 +42,33 @@ class Homematicip(MycroftSkill):
             self.speak_dialog('unknown.room', { 'room' : roomName });
         
         self.pixels.off()
-		time.sleep(1)	
-	
-	
-	@intent_handler('homematicip.set.temperature.intent')
-	def handle_set_temperature(self, message):
-		# example for cli call:
-		# hmip_cli.py --group 7588b919-7e37-4f1f-99d9-5008d081e454 --set-point-temperature 17.0
-	
-		self.pixels.listen()
-		time.sleep(1)
-		
-		room_type = message.data.get('room')
-		temperature = str(message.data.get('temperature'))
-		temperature = temperature.replace(",",".")
-		
-		groupId = self.getGroupIdForRoom(room_type)
-		if groupId is None:
-			return		
-		
-		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
-		#'-g 7588b919-7e37-4f1f-99d9-5008d081e454  --set-point-temperature 21'		
-		arguments = ['hmip_cli.py', "-g", groupId, "--set-point-temperature", str(temperature)]
-		subprocess.Popen(arguments);
-		
-		self.pixels.off()
-		time.sleep(1)	
-		
-		self.speak_dialog('set.temperature', { 
+        time.sleep(1)
+    
+    @intent_handler('homematicip.set.temperature.intent')
+    def handle_set_temperature(self, message):
+        self.pixels.listen()
+        time.sleep(1)
+        room_type = message.data.get('room')
+        self.pixels.off()
+        time.sleep(1)
+        self.speak_dialog('set.temperature', { 
 			'room' : room_type,
 			'temperature' : temperature
-		});			
-		
-	@intent_handler('homematicip.get.temperature.intent')
-	def handle_get_temperature(self, message):	
-		self.pixels.listen()
-		room_type = message.data.get('room')
-		if room_type is None:			
-			return
-		
-		#room_type = room_type.replace(" ","")
-		
-		#self.speak_dialog('wait.for', {'command': 'get the temperature for ' + room_type})
-
-		# Option from WorkingRoom, BathRoom, DiningRoom, Kitchen, SleepingRoom, LivingRoom
-		result = subprocess.run(['hmip_cli.py', '--list-devices'], stdout=subprocess.PIPE)
-		resultString = str(result.stdout).lower()	
-		split = resultString.split("\\n")
-		
-		room_dict = {
-			"bad" : "wandthermostat bad",
-			"bathroom" : "wandthermostat bad",
-			"restroom" : "wandthermostat bad",
-			"arbeitszimmer" : "arbeitszimmer",
-			"workingroom" : "arbeitszimmer",
-			"wohnzimmer" :"couchzimmer",
-			"couchroom" :"couchzimmer", 
-			"livingroom" :"couchzimmer",
-			"küche": "che heizung",
-			"cookingroom": "che heizung",
-			"kitchen": "che heizung",			
-			"kitchenroom": "che heizung",
-			"balkonzimmer": "balkonzimmer",
-			"esszimmer": "balkonzimmer",
-			"diningroom": "balkonzimmer",
-			"schlafzimmer" :"schlafzimmer",
-			"sleepingroom" :"schlafzimmer",
-			"bedroom" :"schlafzimmer"
-		}
-		
-		if room_type not in room_dict:			
-			self.speak_dialog('unknown.room', { 'room' : room_type });
-			self.pixels.off()
-			time.sleep(1)
-			return
-				
-		desired_room = str(room_dict[room_type])
-		
-		self.log.info(desired_room)
-		
-		for room in split:
-			roomString = str(room)
-						
-			#self.log.info('analyzing')
-			#self.log.info(roomString[1:30])
-			
-			match = re.search(r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)', roomString)
-			#r'actualtemperature\((?P<temp>[0-9]{1,}\.[0-9]{1,})\)'
-			if match is None:
-				#self.log.info('could not match')
-				#self.log.info(roomString)
-				continue
-				
-			if  desired_room in roomString:
-				temperature = match.group('temp')
-				self.pixels.speak()
-				self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})				
-				time.sleep(3)
-				self.pixels.off()
-				time.sleep(1)
-				
-		self.pixels.off()
-		time.sleep(1)
+		});
+    @intent_handler('homematicip.get.temperature.intent')
+    def handle_get_temperature(self, message):
+        self.pixels.listen()
+        room_type = message.data.get('room')
+        if room_type is None:
+            return
+        
+        self.pixels.speak()
+        self.speak_dialog('say.temperature', {'room': room_type, 'temperature': temperature})
+        time.sleep(3)
+        self.pixels.off()
+        time.sleep(1)
+        self.pixels.off()
+        time.sleep(1)
 
 class APA102:
     """
@@ -354,7 +276,6 @@ class APA102:
     def dump_array(self):
         """For debug purposes: Dump the LED array onto the console."""
         print(self.leds)
-	
 class AlexaLedPattern(object):
     def __init__(self, show=None, number=12):
         self.pixels_number = number
@@ -407,7 +328,6 @@ class AlexaLedPattern(object):
 
     def off(self):
         self.show([0] * 4 * 12)
-	
 class Pixels:
     PIXELS_N = 12
 
@@ -465,6 +385,5 @@ class Pixels:
             self.dev.set_pixel(i, int(data[4*i + 1]), int(data[4*i + 2]), int(data[4*i + 3]))
 
         self.dev.show()
-				
 def create_skill():
 	return Homematicip()
