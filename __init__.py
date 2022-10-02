@@ -17,7 +17,6 @@ except ImportError:
     import Queue as Queue
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 from . import HomematicIpWrapper
-from . import HomematicIpStatusCode
 
 class Homematicip(MycroftSkill):
     def __init__(self):
@@ -34,7 +33,7 @@ class Homematicip(MycroftSkill):
         roomName = message.data.get('room')
         status = self.homematicIp.activateBoost(roomName)
         
-        if status is HomematicIpStatusCode.Ok:
+        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
             self.speak_dialog('boost', { 
 			    'room' : roomName
             });
