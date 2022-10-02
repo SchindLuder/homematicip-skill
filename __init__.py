@@ -77,7 +77,7 @@ class Homematicip(MycroftSkill):
         self.pixels.off()                
         time.sleep(1)
 
-    def speakCommandResult(self, roomName, status:HomematicIpWrapper.HomematicIpStatusCode, okDialog: function):
+    def speakCommandResult(self, roomName, status:HomematicIpWrapper.HomematicIpStatusCode, okDialog):
         if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
             okDialog()
         elif status is HomematicIpWrapper.HomematicIpStatusCode.CommandAlreadyActive:
