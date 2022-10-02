@@ -57,6 +57,8 @@ class HomematicIpWrapper():
         self.home.get_current_state()
         room = self._getRoomByName(roomName)
 
+        temperature = float(temperature)
+
         if room is None:
             self.log.info(f'Could not set temperature as no room was found for name \'{roomName}\'')
             return HomematicIpStatusCode.UnknownRoom, 
