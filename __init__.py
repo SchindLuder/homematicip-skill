@@ -60,7 +60,7 @@ class Homematicip(MycroftSkill):
     @intent_handler('homematicip.get.temperature.intent')
     def handle_get_temperature(self, message):
         self.pixels.listen()
-        room_type = message.data.get('room')
+        roomName = message.data.get('room')
         if room_type is None:
             return
         
