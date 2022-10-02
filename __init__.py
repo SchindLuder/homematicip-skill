@@ -17,7 +17,7 @@ except ImportError:
     import Queue as Queue
 from mycroft import MycroftSkill, intent_file_handler, intent_handler
 from . import HomematicIpWrapper
-from . import homematicIpStatusCode
+from HomematicIpWrapper import homematicIpStatusCode
 
 class Homematicip(MycroftSkill):
     def __init__(self):
