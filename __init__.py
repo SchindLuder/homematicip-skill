@@ -91,9 +91,10 @@ class Homematicip(MycroftSkill):
         self.pixels.speak()
 
 
-        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok and roomsWithOpenWindows.len() == 0:
+        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok and len(roomsWithOpenWindows) == 0:
             self.speak_dialog('say.noOpenWindows')
         else:
+            # built one string from json representation
             readableRoomList = str(roomsWithOpenWindows).replace('\'','').lstrip('[').rstrip(']').replace(',',' und ')
 
         
