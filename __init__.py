@@ -95,10 +95,8 @@ class Homematicip(MycroftSkill):
             self.speak_dialog('say.noOpenWindows')
         else:
             # built one string from json representation
-            readableRoomList = str(roomsWithOpenWindows).replace('\'','').lstrip('[').rstrip(']').replace(',',' und ')
-
-        
-        self.speakCommandResult(roomName, status, lambda : self.speak_dialog('say.openWindows', { 
+            readableRoomList = str(roomsWithOpenWindows).replace('\'','').lstrip('[').rstrip(']').replace(',',' und ')        
+            self.speakCommandResult('', status, lambda : self.speak_dialog('say.openWindows', { 
 			    'rooms' : readableRoomList,
 		    }))
                 
