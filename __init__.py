@@ -80,6 +80,31 @@ class Homematicip(MycroftSkill):
         self.pixels.off()                
         time.sleep(1)
 
+    @intent_handler('homematicip.get.openWindowRooms.intent')
+    def handle_get_rooms_with_open_windows(self,message):
+        self.pixels.listen()
+
+        (status, roomsWithOpenWindows) = self.homematicIp.getRoomsWithOpenWindows()
+
+        self.log.info(f'status:  {str(status)}')
+        self.log.info(f'roomsWithOpenWindows:  {str(roomsWithOpenWindows)}')
+        self.pixels.speak()
+
+
+        if status is HomematicIpWrapper.HomematicIpStatusCode.Ok and roomsWithOpenWindows.len() == 0:
+            self.speak_dialog('say.noOpenWindows')
+        else:
+            readableRoomList = str(roomsWithOpenWindows).replace('\'','').lstrip('[').rstrip(']').replace(',',' und ')
+
+        
+        self.speakCommandResult(roomName, status, lambda : self.speak_dialog('say.openWindows', { 
+			    'rooms' : readableRoomList,
+		    }))
+                
+        time.sleep(3)
+        self.pixels.off()                
+        time.sleep(1)
+
     def speakCommandResult(self, roomName, status:HomematicIpWrapper.HomematicIpStatusCode, okDialog):
         if status is HomematicIpWrapper.HomematicIpStatusCode.Ok:
             okDialog()

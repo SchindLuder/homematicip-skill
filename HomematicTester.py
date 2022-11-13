@@ -25,8 +25,11 @@ self = selfMockup()
 
 homematicIp = HomematicIpWrapper(self.log)
 
-(statusCode, temperature) = homematicIp.getRoomTemperature("Wohnzimmer")
+roomList = list()
+roomList.append('Küche')
+roomList.append('Bad')
 
-if statusCode != HomematicIpStatusCode.Ok:
-	self.log.info(f'setTemp returned {statusCode}' )
+readableRoomList = str(roomList).replace('\'','').lstrip('[').rstrip(']').replace(',',' und ')
 
+
+a = readableRoomList

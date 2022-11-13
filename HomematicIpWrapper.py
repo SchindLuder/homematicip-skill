@@ -3,6 +3,7 @@ from homematicip.home import Home
 from homematicip.device import ShutterContact,HeatingThermostat
 from homematicip.device import TemperatureHumiditySensorDisplay
 from homematicip.group import HeatingGroup
+from homematicip.base.enums import *
 from enum import Enum
 
 class HomematicIpStatusCode(Enum):
@@ -129,9 +130,39 @@ class HomematicIpWrapper():
             return HomematicIpStatusCode.Ok
 
         return HomematicIpStatusCode.Error
-        
 
+    def isWindowOpenInRoom(self, roomName: str) -> bool:                
+        room = self._getRoomByName(roomName)
 
-        
-        
+        if room is None:
+            self.log.info(f'Could not check window state as no room was found for name \'{roomName}\'')
+            return (HomematicIpStatusCode.UnknownRoom, None)
 
+        if room.windowState == WindowState.CLOSED.value:
+            return (HomematicIpStatusCode.Ok, False)
+
+        if room.windowState == WindowState.OPEN.value:
+            return (HomematicIpStatusCode.Ok, True)
+
+        self.log.info(f'Window state of room \'{roomName}\' is \'{room.windowState}\'')
+
+        return (HomematicIpStatusCode.Error, None)
+    
+    def getRoomsWithOpenWindows(self) -> {HomematicIpStatusCode, list}:
+        self.home.get_current_state()
+
+        roomsWithOpenWindows = list()
+
+        try:
+            for group in self.home.groups: 
+                if not isinstance(group, HeatingGroup):
+                    continue
+
+                if group.windowState == WindowState.OPEN.value:
+                    roomsWithOpenWindows.append(group.label)
+                    continue
+        except:
+            return (HomematicIpStatusCode.Error, None)
+        
+        return (HomematicIpStatusCode.Ok, roomsWithOpenWindows)
+    getRoomsWithOpenWindows.__doc__ = "Returns a list of all HeatingGroups with open windows. List is empty if no room has an open window"
